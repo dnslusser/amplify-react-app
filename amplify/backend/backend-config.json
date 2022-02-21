@@ -1,1 +1,9 @@
-{}
+{
+  "function": {
+    "cryptoapp00775e45": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  }
+}
