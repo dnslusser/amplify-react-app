@@ -29,21 +29,36 @@ app.use(function(req, res, next) {
 /**********************
  * Example get method *
  **********************/
- app.get(
-   '/coins'
-   , (req, res) => {
+const axios = require('axios')
 
-      const coins = [
-        { name: 'Bitcoin', symbol: 'BTC', price_usd: "10000" },
-        { name: 'Ethereum', symbol: 'ETH', price_usd: "400" },
-        { name: 'Litecoin', symbol: 'LTC', price_usd: "150" }
-      ];
+app.get(
+  '/coins'
+  , (req, res) => {
 
-    res.json({
-      coins
-    });
+    // Define base url
+    let apiUrl = `https://api.coinlore.com/api/tickers?start=0&limit=10`;
+
+    // Check if there are any query string parameters
+    // If so, reset the base url to include them
+    if (req.apiGateway && req.apiGateway.event.queryStringParameters) {
+      // Destructure the query string parameters...
+      const { start = 0, limit = 10 } = req.apiGateway.event.queryStringParameters;
+      apiUrl = `https://api.coinlore.com/api/tickers/?start=${start}&limit=${limit}`
+    }
+
+  // Call API and return response
+  axios.get(apiUrl)
+    .then(response => {
+      res.json({  
+        coins: response.data.data 
+      });
+    })
+    .catch(err => res.json({
+       error: err 
+      }));
   }
 );
+
 
 /****************************
 * Example post method *
