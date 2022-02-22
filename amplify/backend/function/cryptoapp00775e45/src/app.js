@@ -29,16 +29,21 @@ app.use(function(req, res, next) {
 /**********************
  * Example get method *
  **********************/
+ app.get(
+   '/coins'
+   , (req, res) => {
 
-app.get('/item', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
-});
+      const coins = [
+        { name: 'Bitcoin', symbol: 'BTC', price_usd: "10000" },
+        { name: 'Ethereum', symbol: 'ETH', price_usd: "400" },
+        { name: 'Litecoin', symbol: 'LTC', price_usd: "150" }
+      ];
 
-app.get('/item/*', function(req, res) {
-  // Add your code here
-  res.json({success: 'get call succeed!', url: req.url});
-});
+    res.json({
+      coins
+    });
+  }
+);
 
 /****************************
 * Example post method *
