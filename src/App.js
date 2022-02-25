@@ -26,15 +26,22 @@ const App = () => {
   // Create coins variable and set to empty array
   const [coins, updateCoins] = useState([])
 
+  const [loading, setLoading] = useState(true);
+
   // Define function to all API
   // Update fetchCoins function to use limit and start properties
    const fetchCoins = async () => {
+
+    setLoading(true);
+
     const { limit, start } = input;
     const data = await API.get(
       'cryptoapi'
       , `/coins?limit=${limit}&start=${start}`
       );
     updateCoins(data.coins);
+
+     setLoading(false);
   };
 
   // Call fetchCoins function when component loads
@@ -48,6 +55,11 @@ const App = () => {
   return (
     <div className="App">
 
+      {loading && <h2>Loading...</h2>}
+
+      {!loading &&
+
+      <div>
       <input
         onChange={e => updateInputValues('limit', e.target.value)}
         placeholder="Enter limit"
@@ -76,6 +88,8 @@ const App = () => {
           </div>
         ))
       }
+      </div>
+    }
     </div>
   );
 }
