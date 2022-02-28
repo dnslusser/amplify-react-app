@@ -59,6 +59,25 @@ app.get(
   }
 );
 
+app.get(
+    "/born"
+    , async (req, res) => {
+
+      try {
+        const data = await axios.get("https://api.github.com/users/dnslusser");
+        res.json({
+          bornOnInfo:data.data
+        });
+      }
+      catch (err) {
+        res.json({
+          error: err
+        });
+      }
+      
+    }
+);
+
 
 /****************************
 * Example post method *
